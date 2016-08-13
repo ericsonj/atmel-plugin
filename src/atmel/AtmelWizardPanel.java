@@ -13,27 +13,30 @@ import org.openide.util.NbBundle;
 /**
  * Panel just asking for basic info.
  */
-public class ArduinoWizardPanel implements WizardDescriptor.Panel,
+public class AtmelWizardPanel implements WizardDescriptor.Panel,
         WizardDescriptor.ValidatingPanel, WizardDescriptor.FinishablePanel {
 
     private WizardDescriptor wizardDescriptor;
-    private ArduinoPanelVisual component;
+    private AtmelPanelVisual component;
 
-    public ArduinoWizardPanel() {
+    public AtmelWizardPanel() {
     }
 
+    @Override
     public Component getComponent() {
         if (component == null) {
-            component = new ArduinoPanelVisual(this);
-            component.setName(NbBundle.getMessage(ArduinoWizardPanel.class, "LBL_CreateProjectStep"));
+            component = new AtmelPanelVisual(this);
+            component.setName(NbBundle.getMessage(AtmelWizardPanel.class, "LBL_CreateProjectStep"));
         }
         return component;
     }
 
+    @Override
     public HelpCtx getHelp() {
-        return new HelpCtx(ArduinoWizardPanel.class);
+        return new HelpCtx(AtmelWizardPanel.class);
     }
 
+    @Override
     public boolean isValid() {
         getComponent();
         return component.valid(wizardDescriptor);
@@ -41,12 +44,14 @@ public class ArduinoWizardPanel implements WizardDescriptor.Panel,
 
     private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
 
+    @Override
     public final void addChangeListener(ChangeListener l) {
         synchronized (listeners) {
             listeners.add(l);
         }
     }
 
+    @Override
     public final void removeChangeListener(ChangeListener l) {
         synchronized (listeners) {
             listeners.remove(l);
@@ -64,20 +69,24 @@ public class ArduinoWizardPanel implements WizardDescriptor.Panel,
         }
     }
 
+    @Override
     public void readSettings(Object settings) {
         wizardDescriptor = (WizardDescriptor) settings;
         component.read(wizardDescriptor);
     }
 
+    @Override
     public void storeSettings(Object settings) {
         WizardDescriptor d = (WizardDescriptor) settings;
         component.store(d);
     }
 
+    @Override
     public boolean isFinishPanel() {
         return true;
     }
 
+    @Override
     public void validate() throws WizardValidationException {
         getComponent();
         component.validate(wizardDescriptor);
