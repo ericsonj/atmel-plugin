@@ -28,7 +28,9 @@ public class AtmelPanelVisual extends JPanel implements DocumentListener {
         projectLocationTextField.getDocument().addDocumentListener(this);
         LinkedList<MMCDevice> mmclist = AVRDevice.getInstance().getMmcList();
         for (MMCDevice mmc : mmclist) {
-            jComboBoxBoard.addItem(mmc.getName());
+            if (mmc.getMmc() != null) {
+                jComboBox2.addItem(mmc);
+            }
         }
         LinkedList<ProgrammerDevice> programmer = AVRDevice.getInstance().getProgList();
         for (ProgrammerDevice programmer1 : programmer) {
@@ -57,11 +59,11 @@ public class AtmelPanelVisual extends JPanel implements DocumentListener {
         createdFolderLabel = new javax.swing.JLabel();
         createdFolderTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jComboBoxBoard = new javax.swing.JComboBox<String>();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldSerialPort = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
+        jComboBox2 = new javax.swing.JComboBox();
 
         projectNameLabel.setLabelFor(projectNameTextField);
         org.openide.awt.Mnemonics.setLocalizedText(projectNameLabel, org.openide.util.NbBundle.getMessage(AtmelPanelVisual.class, "AtmelPanelVisual.projectNameLabel.text")); // NOI18N
@@ -96,6 +98,12 @@ public class AtmelPanelVisual extends JPanel implements DocumentListener {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(AtmelPanelVisual.class, "AtmelPanelVisual.jLabel5.text")); // NOI18N
 
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,11 +120,11 @@ public class AtmelPanelVisual extends JPanel implements DocumentListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldSerialPort)
-                    .addComponent(jComboBoxBoard, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(projectNameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                     .addComponent(projectLocationTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                     .addComponent(createdFolderTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(browseButton)
                 .addContainerGap())
@@ -140,7 +148,7 @@ public class AtmelPanelVisual extends JPanel implements DocumentListener {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBoxBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,12 +188,16 @@ public class AtmelPanelVisual extends JPanel implements DocumentListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldSerialPortActionPerformed
 
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseButton;
     private javax.swing.JLabel createdFolderLabel;
     private javax.swing.JTextField createdFolderTextField;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox<String> jComboBoxBoard;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -254,23 +266,22 @@ public class AtmelPanelVisual extends JPanel implements DocumentListener {
         d.putProperty("projdir", new File(folder));
         d.putProperty("name", name);
 
-        setProperty(d, "mmc", jComboBoxBoard.getModel().getSelectedItem().toString());
+        setProperty(d, "mmc", jComboBox2.getSelectedItem());
         setProperty(d, "port", jTextFieldSerialPort.getText());
-        
-        ProgrammerDevice prog = null;
-        if (jComboBox1.getSelectedItem() instanceof ProgrammerDevice) {
-            prog = (ProgrammerDevice) jComboBox1.getSelectedItem();
-        }
-        setProperty(d, "programmer", prog.getCode());
-        
-        
+
+//        ProgrammerDevice prog = null;
+//        if (jComboBox1.getSelectedItem() instanceof ProgrammerDevice) {
+//            prog = (ProgrammerDevice) jComboBox1.getSelectedItem();
+//        }
+        setProperty(d, "programmer", jComboBox1.getSelectedItem());
+
     }
 
     private void setProperty(WizardDescriptor setting, String key, String value) {
         NbPreferences.forModule(AtmelWizardPanel.class).put(key, value);
         setting.putProperty(key, value);
     }
-    
+
     private void setProperty(WizardDescriptor setting, String key, Object value) {
         NbPreferences.forModule(AtmelWizardPanel.class).put(key, value.toString());
         setting.putProperty(key, value);
@@ -293,10 +304,10 @@ public class AtmelPanelVisual extends JPanel implements DocumentListener {
         }
         this.projectLocationTextField.setText(projectLocation.getAbsolutePath());
 
-        this.jComboBoxBoard.setSelectedItem(getStringProperty("mmc", "ATmega328P"));
+//        this.jComboBoxBoard.setSelectedItem(getStringProperty("mmc", "ATmega328P"));
         this.jTextFieldSerialPort.setText(getStringProperty("port", "usb"));
-        
-
+        this.jComboBox2.setSelectedItem(AVRDevice.getInstance().getMMCDeviceByName("ATmega328P"));
+        this.jComboBox1.setSelectedItem(AVRDevice.getInstance().getProgDeviceByCode("avrisp2"));
         String projectName = (String) settings.getProperty("name");
         if (projectName == null) {
             projectName = "AtmelProject";

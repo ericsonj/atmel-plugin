@@ -29,11 +29,11 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jTextFieldSerialPort" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jComboBoxBoard" alignment="0" max="32767" attributes="0"/>
                   <Component id="projectNameTextField" alignment="1" pref="199" max="32767" attributes="0"/>
                   <Component id="projectLocationTextField" alignment="1" pref="199" max="32767" attributes="0"/>
                   <Component id="createdFolderTextField" alignment="1" pref="199" max="32767" attributes="0"/>
                   <Component id="jComboBox1" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jComboBox2" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="browseButton" min="-2" max="-2" attributes="0"/>
@@ -63,7 +63,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxBoard" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -146,11 +146,6 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxBoard">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -179,6 +174,16 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox2">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
