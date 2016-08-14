@@ -343,8 +343,8 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
         this.projectLocationTextField.setText(projectLocation.getAbsolutePath());
         
         this.jComboBoxBoard.setSelectedItem(getStringProperty("board", "Arduino Uno"));
-        this.jTextFieldSerialPort.setText(getStringProperty("comport", "COM3"));
-        this.jTextFieldArduinoFolder.setText(getStringProperty("basedir", "C:/arduino-1.6.7"));
+        this.jTextFieldSerialPort.setText(getStringProperty("comport", "/dev/ttyUSB0"));
+        this.jTextFieldArduinoFolder.setText(getStringProperty("basedir", "/usr/share/arduino"));
         this.jTextAreaLibraries.setText(getStringProperty("libraries", "Firmata;"));
         
         String projectName = (String) settings.getProperty("name");
