@@ -30,9 +30,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jTextFieldSerialPort" alignment="0" max="32767" attributes="0"/>
-                  <Component id="projectNameTextField" alignment="1" pref="191" max="32767" attributes="0"/>
-                  <Component id="projectLocationTextField" alignment="1" pref="191" max="32767" attributes="0"/>
-                  <Component id="createdFolderTextField" alignment="1" pref="191" max="32767" attributes="0"/>
+                  <Component id="projectNameTextField" alignment="1" pref="313" max="32767" attributes="0"/>
+                  <Component id="projectLocationTextField" alignment="1" pref="313" max="32767" attributes="0"/>
+                  <Component id="createdFolderTextField" alignment="1" pref="313" max="32767" attributes="0"/>
                   <Component id="jTextFieldArduinoFolder" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Component id="jComboBox1" max="32767" attributes="0"/>
@@ -157,7 +157,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="arduino/Bundle.properties" key="ArduinoPanelVisual.arduino.board" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="atmel/Bundle.properties" key="ArduinoPanelVisual.arduino.board_1" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
