@@ -11,6 +11,7 @@ public class AVRDevice {
 
     private final LinkedList<MMCDevice> mmcList;
     private final LinkedList<ProgrammerDevice> progList;
+    private final LinkedList<ArduinoDevice> arduinoList;
 
     static AVRDevice instance;
 
@@ -21,8 +22,10 @@ public class AVRDevice {
     private AVRDevice() {
         mmcList = new LinkedList<>();
         progList = new LinkedList<>();
+        arduinoList = new LinkedList<>();
         loadMMCDevices(mmcList);
         loadProgDevices(progList);
+        loadArduinoList(arduinoList);
     }
 
     public static AVRDevice getInstance() {
@@ -33,28 +36,42 @@ public class AVRDevice {
         return mmcList;
     }
 
-    public MMCDevice getMMCDeviceByName(String name){
+    public MMCDevice getMMCDeviceByName(String name) {
         for (MMCDevice mmcList1 : mmcList) {
-            if(mmcList1.getName().equals(name)){
+            if (mmcList1.getName().equals(name)) {
                 return mmcList1;
             }
         }
         return null;
     }
-    
-    public ProgrammerDevice getProgDeviceByCode(String code){
+
+    public ProgrammerDevice getProgDeviceByCode(String code) {
         for (ProgrammerDevice prog : progList) {
-            if(prog.getCode().equals(code)){
+            if (prog.getCode().equals(code)) {
                 return prog;
             }
         }
         return null;
     }
     
+    public ArduinoDevice getArduinoDeviceByName(String name) {
+        for (ArduinoDevice arduino : arduinoList) {
+            if (arduino.getName().equals(name)) {
+                return arduino;
+            }
+        }
+        return null;
+    }
+    
+
     public LinkedList<ProgrammerDevice> getProgList() {
         return progList;
     }
 
+    public LinkedList<ArduinoDevice> getArduinoList() {
+        return arduinoList;
+    }
+    
     private void loadMMCDevices(LinkedList<MMCDevice> mmcList) {
         mmcList.add(new MMCDevice("uc3a0512", "AT32UC3A0512", null));
         mmcList.add(new MMCDevice("c128", "AT90CAN128", "at90can128"));
@@ -304,5 +321,19 @@ public class AVRDevice {
         progList.add(new ProgrammerDevice("wiring", "Wiring"));
         progList.add(new ProgrammerDevice("xil", "Xilinx JTAG cable"));
         progList.add(new ProgrammerDevice("xplainedpro", "Atmel AVR XplainedPro in JTAG mode"));
+    }
+
+    private void loadArduinoList(LinkedList<ArduinoDevice> arduinoList) {
+        arduinoList.add(new ArduinoDevice("Arduino Uno", "atmega328p", "arduino", 115200, "standard"));
+        arduinoList.add(new ArduinoDevice("Arduino Duemilanove ATmega328", "atmega328p", "arduino", 57600, "standard"));
+        arduinoList.add(new ArduinoDevice("Arduino Diecimila or Duemilanove ATmega168", "atmega168", "arduino", 19200, "standard"));
+        arduinoList.add(new ArduinoDevice("Arduino Nano ATmega328", "atmega328p", "arduino", 57600, "eightanaloginputs"));
+        arduinoList.add(new ArduinoDevice("Arduino nano ATmega168", "atmega168", "arduino", 19200, "eightanaloginputs"));
+        arduinoList.add(new ArduinoDevice("Arduino Mega 2560 or Mega ADK", "atmega2560", "wiring", 115200, "mega"));
+        arduinoList.add(new ArduinoDevice("Arduino Mega ATmega1280", "atmega1280", "arduino", 57600, "mega"));
+//        arduinoList.add(new ArduinoDevice("Arduino Leonardo", "atmega32u4", "avr109", 57600, "leonardo"));
+//        arduinoList.add(new ArduinoDevice("Arduino Micro", "atmega32u4", "avr109", 57600, "micro"));
+        arduinoList.add(new ArduinoDevice("Arduino Mini ATmega328", "atmega328p", "arduino", 115200, "eightanaloginputs"));
+        arduinoList.add(new ArduinoDevice("Arduino Mini ATmega168", "atmega168", "arduino", 19200, "eightanaloginputs"));
     }
 }

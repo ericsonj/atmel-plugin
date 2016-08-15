@@ -279,19 +279,28 @@ public class ArduinoWizardIterator implements WizardDescriptor./*Progress*/Insta
                     pw.println(libraries);
                 }
 
-                if (wiz.getProperty("board").equals("Arduino Mega 2560")) {
-                    pw.println("ARDUINO_MODEL = atmega2560");
-                    pw.println("BAUD_RATE = 115200");
-                    pw.println("ARDUINO_PROGRAMMER = wiring");
-                    pw.println("ARDUINO_PINS_DIR = ${ARDUINO_BASE_DIR}/hardware/arduino/variants/mega");
+                ArduinoDevice arduino = (ArduinoDevice) wiz.getProperty("board");
+                BaseDirectories dir = new BaseDirectories(basedir, arduino.getPinFolder());
 
-                } else { //Arduino Uno:
-                    pw.println("ARDUINO_MODEL = atmega328p");
-                    pw.println("BAUD_RATE = 57600");
-                    pw.println("ARDUINO_PROGRAMMER = arduino");
-                    pw.println("ARDUINO_PINS_DIR = ${ARDUINO_BASE_DIR}/hardware/arduino/variants/standard");
-                }
+                pw.println("ARDUINO_MODEL = " + arduino.getCode());
+                pw.println("BAUD_RATE = " + Long.toString(arduino.getBaudrate()));
+                pw.println("ARDUINO_PROGRAMMER = " + arduino.getProgrammer());
 
+//                if (wiz.getProperty("board").equals("Arduino Mega 2560")) {
+//                    dir = new BaseDirectories(basedir, "arduino mega 2560");
+//                    pw.println("ARDUINO_MODEL = atmega2560");
+//                    pw.println("BAUD_RATE = 115200");
+//                    pw.println("ARDUINO_PROGRAMMER = wiring");
+////                    pw.println("ARDUINO_PINS_DIR = ${ARDUINO_BASE_DIR}/hardware/arduino/variants/mega");
+//
+//                } else if (wiz.getProperty("board").equals("Arduino Uno")) {
+//                    dir = new BaseDirectories(basedir, "arduino uno");
+//                    pw.println("ARDUINO_MODEL = atmega328p");
+//                    pw.println("BAUD_RATE = 57600");
+//                    pw.println("ARDUINO_PROGRAMMER = arduino");
+//                }
+                pw.println("ARDUINO_PINS_DIR = ${ARDUINO_BASE_DIR}" + dir.getPinDir());
+                pw.println("ARDUINO_CORE_DIR = ${ARDUINO_BASE_DIR}" + dir.getArduinoCoreDir());
                 pw.println();
                 pw.println(baos.toString());
             }

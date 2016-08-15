@@ -6,6 +6,7 @@
 package atmel;
 
 import java.io.File;
+import java.util.LinkedList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,6 +32,11 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
         projectNameTextField.getDocument().addDocumentListener(this);
         projectLocationTextField.getDocument().addDocumentListener(this);
         jTextFieldArduinoFolder.getDocument().addDocumentListener(this);
+        LinkedList<ArduinoDevice> arduinos = AVRDevice.getInstance().getArduinoList();
+        for (ArduinoDevice arduino : arduinos) {
+            jComboBox1.addItem(arduino);
+        }
+        
     }
 
     public String getProjectName() {
@@ -53,7 +59,6 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
         createdFolderLabel = new javax.swing.JLabel();
         createdFolderTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jComboBoxBoard = new javax.swing.JComboBox<String>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldSerialPort = new javax.swing.JTextField();
@@ -63,6 +68,7 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaLibraries = new javax.swing.JTextArea();
         jButtonHelpLibraries = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
 
         projectNameLabel.setLabelFor(projectNameTextField);
         org.openide.awt.Mnemonics.setLocalizedText(projectNameLabel, org.openide.util.NbBundle.getMessage(ArduinoPanelVisual.class, "ArduinoPanelVisual.projectNameLabel.text")); // NOI18N
@@ -84,8 +90,6 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
         createdFolderTextField.setEditable(false);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ArduinoPanelVisual.class, "ArduinoPanelVisual.arduino.board")); // NOI18N
-
-        jComboBoxBoard.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Arduino Uno", "Arduino Mega 2560" }));
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ArduinoPanelVisual.class, "ArduinoPanelVisual.jLabel2.text")); // NOI18N
 
@@ -142,12 +146,12 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextFieldSerialPort, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxBoard, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(projectNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                     .addComponent(projectLocationTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                     .addComponent(createdFolderTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                     .addComponent(jTextFieldArduinoFolder)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(browseButton)
@@ -171,10 +175,10 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(createdFolderLabel)
                     .addComponent(createdFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBoxBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -190,7 +194,7 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonHelpLibraries))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -235,7 +239,7 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
     private javax.swing.JTextField createdFolderTextField;
     private javax.swing.JButton jButtonHelpArduinoFolder;
     private javax.swing.JButton jButtonHelpLibraries;
-    private javax.swing.JComboBox<String> jComboBoxBoard;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -314,7 +318,7 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
         d.putProperty("projdir", new File(folder));
         d.putProperty("name", name);
         
-        setStringProperty(d, "board", jComboBoxBoard.getModel().getSelectedItem().toString());
+        setProperty(d, "board", jComboBox1.getSelectedItem());
         setStringProperty(d, "comport", jTextFieldSerialPort.getText());        
         setStringProperty(d, "basedir", jTextFieldArduinoFolder.getText());        
         setStringProperty(d, "libraries", jTextAreaLibraries.getText());  
@@ -322,6 +326,11 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
 
     private void setStringProperty(WizardDescriptor setting, String key, String value) {
         NbPreferences.forModule(ArduinoWizardPanel.class).put(key, value);
+        setting.putProperty(key, value);
+    }
+    
+    private void setProperty(WizardDescriptor setting, String key, Object value) {
+        NbPreferences.forModule(AtmelWizardPanel.class).put(key, value.toString());
         setting.putProperty(key, value);
     }
     
@@ -342,7 +351,7 @@ public class ArduinoPanelVisual extends JPanel implements DocumentListener {
         }
         this.projectLocationTextField.setText(projectLocation.getAbsolutePath());
         
-        this.jComboBoxBoard.setSelectedItem(getStringProperty("board", "Arduino Uno"));
+        this.jComboBox1.setSelectedItem(AVRDevice.getInstance().getArduinoDeviceByName("Arduino Uno"));
         this.jTextFieldSerialPort.setText(getStringProperty("comport", "/dev/ttyUSB0"));
         this.jTextFieldArduinoFolder.setText(getStringProperty("basedir", "/usr/share/arduino"));
         this.jTextAreaLibraries.setText(getStringProperty("libraries", "Firmata;"));
